@@ -38,7 +38,7 @@ namespace ConsoleApp1
                         ShowList(names, positions);
                         break;
                     case 3:
-                        DeleteResume(ref arrayLenght,tempArray, ref names, ref positions);
+                        DeleteResume(bufferArray,ref arrayLenght,tempArray, ref names, ref positions);
                         break;
                     case 4:
                         SearchSoname(names);
@@ -83,39 +83,31 @@ namespace ConsoleApp1
             Console.Clear();
         }
 
-        static void DeleteResume(ref int arrayLenght,string[] tempArray, ref string[] names, ref string[] positions)
+        static void DeleteResume(string[] bufferArray,ref int arrayLenght,string[] tempArray, ref string[] names, ref string[] positions)
         {
             Console.WriteLine("Какое досье вы хотите удалить?");
             int userChooise = Convert.ToInt32(Console.ReadLine());
 
-            if (userChooise < names.Length)
+            if (userChooise <= names.Length)
             {
                 names[userChooise - 1] = " ";
+                positions[userChooise - 1] = " ";
 
                 for (int i = userChooise; i < names.Length; i++)
                 {
                     names[i - 1] = names[i];
+                    positions[i - 1] = positions[i];
                 }
                 tempArray = names;
+                bufferArray = positions;
                 arrayLenght -= 1;
                 names = new string[arrayLenght];
+                positions = new string[arrayLenght];
 
                 for (int i = 0; i < names.Length; i++)
                 {
                     names[i] = tempArray[i];
-                }
-                positions[userChooise - 1] = " ";
-
-                for (int i = userChooise; i < positions.Length; i++)
-                {
-                    positions[i - 1] = positions[i];
-                }
-                tempArray = positions;
-                positions = new string[arrayLenght];
-
-                for (int i = 0; i < positions.Length; i++)
-                {
-                    positions[i] = tempArray[i];
+                    positions[i] = bufferArray[i];
                 }
                 Console.Clear();
             }
