@@ -16,6 +16,7 @@ namespace ConsoleApp1
             positions[1] = "Hr";
             positions[2] = "CTEO";
             string[] tempArray = { };
+            string[] bufferArray = { };
             bool isWorking = true;
 
             while (isWorking == true)
@@ -31,7 +32,7 @@ namespace ConsoleApp1
                 switch (userInput)
                 {
                     case 1:
-                        AddNewWorker(ref arrayLenght,tempArray,ref names,ref positions);
+                        AddNewWorker(bufferArray,ref arrayLenght,tempArray,ref names,ref positions);
                         break;
                     case 2:
                         ShowList(names, positions);
@@ -43,36 +44,31 @@ namespace ConsoleApp1
                         SearchSoname(names);
                         break;
                     case 5:
-                        isWorking = exit(isWorking);
+                        isWorking = Exit(isWorking);
                         break;
                 }
             }
         }
 
-        static void AddNewWorker(ref int arrayLenght, string [] tempArray,ref string [] names,ref string [] positions)
+        static void AddNewWorker(string [] bufferArray,ref int arrayLenght, string [] tempArray,ref string [] names,ref string [] positions)
         {
             tempArray = names;
+            bufferArray = positions;
             arrayLenght += 1;
             names = new string[arrayLenght];
-
-            for (int i = 0; i < tempArray.Length; i++)
-            {
-                names[i] = tempArray[i];
-            }
-            Console.WriteLine("Введите ФИО");
-            string name = Console.ReadLine();
-            names[arrayLenght - 1] = name;
-            tempArray = positions;
             positions = new string[arrayLenght];
 
             for (int i = 0; i < tempArray.Length; i++)
             {
-                positions[i] = tempArray[i];
+                names[i] = tempArray[i];
+                positions[i] = bufferArray[i];
             }
+            Console.WriteLine("Введите ФИО");
+            string name = Console.ReadLine();
+            names[arrayLenght - 1] = name;
             Console.WriteLine("Введите должность");
             string position = Console.ReadLine();
             positions[arrayLenght - 1] = position;
-            Console.Clear();
         }
 
         static void ShowList(string [] names, string [] positions)
@@ -150,7 +146,7 @@ namespace ConsoleApp1
             }
         }
 
-        static bool exit(bool isWorking)
+        static bool Exit(bool isWorking)
         {
             Console.WriteLine("Выход из программы");
             isWorking = false;
