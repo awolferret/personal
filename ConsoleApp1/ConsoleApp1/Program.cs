@@ -15,8 +15,6 @@ namespace ConsoleApp1
             positions[0] = "Ceo";
             positions[1] = "Hr";
             positions[2] = "CTEO";
-            string[] tempArray = { };
-            string[] bufferArray = { };
             bool isWorking = true;
 
             while (isWorking == true)
@@ -32,13 +30,13 @@ namespace ConsoleApp1
                 switch (userInput)
                 {
                     case 1:
-                        AddNewWorker(bufferArray,ref arrayLenght,tempArray,ref names,ref positions);
+                        AddNewWorker(ref arrayLenght,ref names,ref positions);
                         break;
                     case 2:
                         ShowList(names, positions);
                         break;
                     case 3:
-                        DeleteResume(bufferArray,ref arrayLenght,tempArray, ref names, ref positions);
+                        DeleteResume(ref arrayLenght,ref names, ref positions);
                         break;
                     case 4:
                         SearchSoname(names);
@@ -50,9 +48,9 @@ namespace ConsoleApp1
             }
         }
 
-        static void AddNewWorker(string [] bufferArray,ref int arrayLenght, string [] tempArray,ref string [] names,ref string [] positions)
+        static void AddNewWorker(ref int arrayLenght, ref string [] names,ref string [] positions)
         {
-            IncreaseArray(bufferArray, ref arrayLenght, tempArray, ref names, ref positions);
+            IncreaseArray(ref arrayLenght, ref names, ref positions);
             Console.WriteLine("Введите ФИО");
             string name = Console.ReadLine();
             names[arrayLenght - 1] = name;
@@ -73,8 +71,10 @@ namespace ConsoleApp1
             Console.Clear();
         }
 
-        static void DeleteResume(string[] bufferArray,ref int arrayLenght,string[] tempArray, ref string[] names, ref string[] positions)
+        static void DeleteResume(ref int arrayLenght, ref string[] names, ref string[] positions)
         {
+            string[] tempArray = { };
+            string[] bufferArray = { };
             Console.WriteLine("Какое досье вы хотите удалить?");
             int userChoice = Convert.ToInt32(Console.ReadLine());
 
@@ -116,8 +116,10 @@ namespace ConsoleApp1
             return isWorking;
         }
 
-        static void IncreaseArray(string[] bufferArray, ref int arrayLenght, string[] tempArray, ref string[] names, ref string[] positions)
+        static void IncreaseArray( ref int arrayLenght, ref string[] names, ref string[] positions)
         {
+            string[] tempArray = { };
+            string[] bufferArray = { };
             tempArray = names;
             bufferArray = positions;
             arrayLenght += 1;
@@ -127,8 +129,12 @@ namespace ConsoleApp1
             for (int i = 0; i < tempArray.Length; i++)
             {
                 names[i] = tempArray[i];
+            }
+            for (int i = 0; i < tempArray.Length; i++)
+            {
                 positions[i] = bufferArray[i];
             }
+
         }
 
         static void DecreaseArray(int userChoice, string[] bufferArray, ref int arrayLenght, string[] tempArray, ref string[] names, ref string[] positions)
@@ -139,6 +145,9 @@ namespace ConsoleApp1
             for (int i = userChoice; i < names.Length; i++)
             {
                 names[i - 1] = names[i];
+            }
+            for (int i = userChoice; i < positions.Length; i++)
+            {
                 positions[i - 1] = positions[i];
             }
             tempArray = names;
@@ -150,6 +159,10 @@ namespace ConsoleApp1
             for (int i = 0; i < names.Length; i++)
             {
                 names[i] = tempArray[i];
+
+            }
+            for (int i = 0; i < positions.Length; i++)
+            {
                 positions[i] = bufferArray[i];
             }
             Console.Clear();
