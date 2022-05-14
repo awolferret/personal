@@ -50,13 +50,14 @@ namespace ConsoleApp1
 
         static void AddNewWorker(ref int arrayLenght, ref string [] names,ref string [] positions)
         {
-            IncreaseArray(ref arrayLenght, ref names, ref positions);
+            names = ExpandArray(names,arrayLenght);
+            positions = ExpandArray(positions, arrayLenght);
             Console.WriteLine("Введите ФИО");
             string name = Console.ReadLine();
-            names[arrayLenght - 1] = name;
+            names[arrayLenght] = name;
             Console.WriteLine("Введите должность");
             string position = Console.ReadLine();
-            positions[arrayLenght - 1] = position;
+            positions[arrayLenght] = position;
         }
 
         static void ShowList(string [] names, string [] positions)
@@ -73,16 +74,15 @@ namespace ConsoleApp1
 
         static void DeleteResume(ref int arrayLenght, ref string[] names, ref string[] positions)
         {
-            string[] tempArray = { };
-            string[] bufferArray = { };
             Console.WriteLine("Какое досье вы хотите удалить?");
             int userChoice = Convert.ToInt32(Console.ReadLine());
 
             if (userChoice <= names.Length)
             {
-                DecreaseArray( userChoice, bufferArray, ref arrayLenght, tempArray, ref names, ref positions);
+                names = DecreaseArray(names, userChoice, arrayLenght);
+                positions = DecreaseArray(positions, userChoice, arrayLenght);
             }
-            else 
+            else
             {
                 Console.WriteLine("Такого досье нет");
             }
@@ -116,56 +116,38 @@ namespace ConsoleApp1
             return isWorking;
         }
 
-        static void IncreaseArray( ref int arrayLenght, ref string[] names, ref string[] positions)
+        static string[] ExpandArray(string[] arrayForExpansion, int arrayLenght)
         {
             string[] tempArray = { };
-            string[] bufferArray = { };
-            tempArray = names;
-            bufferArray = positions;
+            tempArray = arrayForExpansion;
             arrayLenght += 1;
-            names = new string[arrayLenght];
-            positions = new string[arrayLenght];
+            arrayForExpansion = new string[arrayLenght];
 
             for (int i = 0; i < tempArray.Length; i++)
             {
-                names[i] = tempArray[i];
+                arrayForExpansion[i] = tempArray[i];
             }
-            for (int i = 0; i < tempArray.Length; i++)
-            {
-                positions[i] = bufferArray[i];
-            }
-
+            return arrayForExpansion;
         }
 
-        static void DecreaseArray(int userChoice, string[] bufferArray, ref int arrayLenght, string[] tempArray, ref string[] names, ref string[] positions)
+        static string[] DecreaseArray(string[] arrayForDecreasion, int userChoice, int arrayLenght)
         {
-            names[userChoice - 1] = " ";
-            positions[userChoice - 1] = " ";
+            string[] tempArray = { };
+            arrayForDecreasion[userChoice - 1] = " ";
 
-            for (int i = userChoice; i < names.Length; i++)
+            for (int i = userChoice; i < arrayForDecreasion.Length; i++)
             {
-                names[i - 1] = names[i];
+                arrayForDecreasion[i - 1] = arrayForDecreasion[i];
             }
-            for (int i = userChoice; i < positions.Length; i++)
-            {
-                positions[i - 1] = positions[i];
-            }
-            tempArray = names;
-            bufferArray = positions;
+            tempArray = arrayForDecreasion;
             arrayLenght -= 1;
-            names = new string[arrayLenght];
-            positions = new string[arrayLenght];
+            arrayForDecreasion = new string[arrayLenght];
 
-            for (int i = 0; i < names.Length; i++)
+            for (int i = 0; i < arrayForDecreasion.Length; i++)
             {
-                names[i] = tempArray[i];
-
+                arrayForDecreasion[i] = tempArray[i];
             }
-            for (int i = 0; i < positions.Length; i++)
-            {
-                positions[i] = bufferArray[i];
-            }
-            Console.Clear();
+            return arrayForDecreasion;
         }
     }
 }
