@@ -62,7 +62,6 @@ namespace ConsoleApp1
 
         static void ShowList(string [] names, string [] positions)
         {
-
             for (int i = 0; i < names.Length; i++)
             {
                 Console.WriteLine((i + 1) + " " + names[i] + " - " + positions[i]);
